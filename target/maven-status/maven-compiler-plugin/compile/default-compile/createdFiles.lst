@@ -1,1 +1,11 @@
+me\jhim\retale\commands\SubCommand.class
+me\jhim\retale\commands\store\StoreCommandManager.class
+me\jhim\retale\menus\store\ConfirmStoreCreation$1.class
+me\jhim\retale\menus\store\StoreGeneralMenu$1.class
+me\jhim\retale\menus\Menu.class
+me\jhim\retale\menus\PlayerMenuUtility.class
+me\jhim\retale\managers\StoreManager.class
+me\jhim\retale\menus\store\StoreGeneralMenu.class
+me\jhim\retale\menus\MenuEvents.class
+me\jhim\retale\menus\store\ConfirmStoreCreation.class
 me\jhim\retale\Retale.class
