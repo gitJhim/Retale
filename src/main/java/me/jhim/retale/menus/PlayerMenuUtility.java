@@ -9,6 +9,8 @@ public class PlayerMenuUtility {
 
     private String createStoreName;
 
+    private String createNeighborhoodName;
+
     private Inventory lastMenu;
 
     public PlayerMenuUtility(Player owner) {
@@ -36,5 +38,13 @@ public class PlayerMenuUtility {
     }
 
     public String getCreateStoreName() { return this.createStoreName; }
+
+    public String getCreateNeighborhoodName() {
+        return createNeighborhoodName;
+    }
+
+    public void setCreateNeighborhoodName(String createNeighborhoodName) {
+        this.createNeighborhoodName = createNeighborhoodName;
+    }
 
 }

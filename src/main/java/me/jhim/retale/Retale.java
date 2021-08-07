@@ -1,7 +1,9 @@
 package me.jhim.retale;
 
+import me.jhim.retale.commands.neighborhood.NeighborhoodCommandManager;
 import me.jhim.retale.commands.store.StoreCommandManager;
-import me.jhim.retale.managers.StoreManager;
+import me.jhim.retale.neighborhoods.NeighborhoodManager;
+import me.jhim.retale.stores.StoreManager;
 import me.jhim.retale.menus.MenuEvents;
 import me.jhim.retale.menus.PlayerMenuUtility;
 import org.bukkit.ChatColor;
@@ -21,6 +23,7 @@ public class Retale extends JavaPlugin {
     private final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<Player, PlayerMenuUtility>();
 
     private StoreManager storeManager;
+    private NeighborhoodManager neighborhoodManager;
 
     @Override
     public void onEnable() {
@@ -37,9 +40,12 @@ public class Retale extends JavaPlugin {
 
     private void loadManagers() {
         storeManager = new StoreManager(this);
+        neighborhoodManager = new NeighborhoodManager();
     }
+
     private void registerCommands() {
         getCommand("store").setExecutor(new StoreCommandManager(this));
+        getCommand("neighborhood").setExecutor(new NeighborhoodCommandManager(this));
     }
 
     private void registerEvents() {
@@ -99,4 +105,5 @@ public class Retale extends JavaPlugin {
     public StoreManager getStoreManager() {
         return this.storeManager;
     }
+    public NeighborhoodManager getNeighborhoodManager() { return this.neighborhoodManager; }
 }

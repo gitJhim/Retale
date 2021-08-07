@@ -5,3 +5,5 @@ api-version: 1.17
 commands:
   store:
     description: General store settings
+  neighborhood:
+    description: General neighborhood
