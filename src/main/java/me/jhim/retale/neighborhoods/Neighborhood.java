@@ -8,15 +8,19 @@ public class Neighborhood {
 
     private String name;
     private Location spawn;
-    private ArrayList<Plot> plots = new ArrayList<Plot>(12);
+    private ArrayList<Plot> plots = new ArrayList<Plot>(16);
 
     public Neighborhood(String name) {
-        for(int i = 0; i < 12; i++) {
+        for(int i = 0; i < 16; i++) {
             Plot plot = new Plot();
             plots.add(plot);
         }
 
         this.name = name;
+    }
+
+    public ArrayList<Plot> getPlots() {
+        return plots;
     }
 
     public String getName() {

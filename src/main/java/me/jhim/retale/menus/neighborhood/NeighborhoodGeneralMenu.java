@@ -27,7 +27,8 @@ public class NeighborhoodGeneralMenu extends Menu {
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
-
+        if(e.getCurrentItem() == null) return;
+        new NeighborhoodPlotsMenu(retale, playerMenuUtility, retale.getNeighborhoodManager().getNeighborhoods().get(e.getSlot())).open();
     }
 
     @Override
