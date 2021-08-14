@@ -2,6 +2,8 @@ package me.jhim.retale;
 
 import me.jhim.retale.commands.neighborhood.NeighborhoodCommandManager;
 import me.jhim.retale.commands.store.StoreCommandManager;
+import me.jhim.retale.events.NeighborhoodEvents;
+import me.jhim.retale.mysql.MySQL;
 import me.jhim.retale.neighborhoods.NeighborhoodManager;
 import me.jhim.retale.stores.StoreManager;
 import me.jhim.retale.menus.MenuEvents;
@@ -14,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,10 +27,13 @@ public class Retale extends JavaPlugin {
 
     private StoreManager storeManager;
     private NeighborhoodManager neighborhoodManager;
+    private MySQL mySQL;
 
     @Override
     public void onEnable() {
+        loadConfig();
         loadManagers();
+        connectSQL();
         registerCommands();
         registerEvents();
         getLogger().info("Retale up for sale!");
@@ -35,12 +41,14 @@ public class Retale extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        mySQL.disconnect();
         getLogger().info("Retale sale closed!");
     }
 
     private void loadManagers() {
+        mySQL = new MySQL(this);
         storeManager = new StoreManager(this);
-        neighborhoodManager = new NeighborhoodManager();
+        neighborhoodManager = new NeighborhoodManager(this);
     }
 
     private void registerCommands() {
@@ -50,6 +58,24 @@ public class Retale extends JavaPlugin {
 
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new MenuEvents(this), this);
+        getServer().getPluginManager().registerEvents(new NeighborhoodEvents(this), this);
+    }
+
+    private void loadConfig() {
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
+    }
+
+    void connectSQL() {
+        try {
+            mySQL.connect();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public MySQL getSQL() {
+        return mySQL;
     }
 
     public String format(String message) {

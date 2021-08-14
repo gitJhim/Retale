@@ -3,6 +3,7 @@ package me.jhim.retale.commands.neighborhood;
 import me.jhim.retale.Retale;
 import me.jhim.retale.commands.SubCommand;
 import me.jhim.retale.commands.neighborhood.subcommands.CreateNeighborhood;
+import me.jhim.retale.commands.neighborhood.subcommands.SetPlotChunks;
 import me.jhim.retale.menus.neighborhood.NeighborhoodGeneralMenu;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -20,6 +21,7 @@ public class NeighborhoodCommandManager implements TabExecutor {
         this.retale = retale;
 
         subCommands.add(new CreateNeighborhood(retale));
+        subCommands.add(new SetPlotChunks(retale));
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

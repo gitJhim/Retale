@@ -39,7 +39,7 @@ public class ConfirmStoreCreation extends Menu {
                 break;
             case RED_TERRACOTTA:
                 p.closeInventory();
-                p.sendMessage(retale.formatInfo("&4&lStore Creation Cancelled"));
+                p.sendMessage(retale.formatInfo("&c&lStore Creation Cancelled"));
                 break;
             default:
                 break;

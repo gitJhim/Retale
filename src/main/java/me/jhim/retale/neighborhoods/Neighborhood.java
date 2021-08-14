@@ -1,8 +1,12 @@
 package me.jhim.retale.neighborhoods;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import me.jhim.retale.stores.Store;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Neighborhood {
 
@@ -39,21 +43,18 @@ public class Neighborhood {
         this.spawn = spawn;
     }
 
-    public void addStore(Store store) {
-        for(Plot p : plots) {
-            if(p.isEmpty()) {
-                p.setStore(store);
-                return;
+    public Store getStoreOfChunk(Chunk c) {
+        int[] coords = {c.getX(), c.getZ()};
+        for(int i = 0; i < plots.size(); i++) {
+            Plot p = plots.get(i);
+            if(p.getChunks().isEmpty()) continue;
+            for(int[] j : p.getChunks()) {
+                if(Arrays.equals(j, coords)) {
+                    return p.getStore();
+                }
             }
         }
-    }
-
-    public void removeStore(Store store) {
-        for(Plot p : plots) {
-            if(p.getStore().equals(store)) {
-                p.setStore(null);
-            }
-        }
+        return null;
     }
 
 }

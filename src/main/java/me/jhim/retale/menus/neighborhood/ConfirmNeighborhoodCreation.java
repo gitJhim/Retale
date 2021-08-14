@@ -39,7 +39,7 @@ public class ConfirmNeighborhoodCreation extends Menu {
                 break;
             case RED_TERRACOTTA:
                 p.closeInventory();
-                p.sendMessage(retale.formatInfo("&4&lNeighborhood Creation Cancelled"));
+                p.sendMessage(retale.formatInfo("&c&lNeighborhood Creation Cancelled"));
                 break;
             default:
                 break;

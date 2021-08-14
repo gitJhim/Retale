@@ -3,6 +3,7 @@ package me.jhim.retale.commands.store;
 import me.jhim.retale.Retale;
 import me.jhim.retale.commands.SubCommand;
 import me.jhim.retale.menus.store.StoreGeneralMenu;
+import me.jhim.retale.stores.Store;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -37,7 +38,16 @@ public class StoreCommandManager implements TabExecutor {
                 }
             }
         } else {
-            new StoreGeneralMenu(retale, retale.getPlayerMenuUtility(p)).open();
+            if(retale.getStoreManager().playerHasStore(p)) {
+                Store store = retale.getStoreManager().getStores().get(p.getUniqueId());
+                if(store.isLoaded()) {
+                    // manage store
+                } else {
+                    p.sendMessage(retale.formatInfo("&4Please load your store into a /neighborhood to manage it!"));
+                }
+            } else {
+                new StoreGeneralMenu(retale, retale.getPlayerMenuUtility(p)).open();
+            }
         }
 
         return true;
