@@ -32,6 +32,16 @@
       <option name="url" value="https://hub.spigotmc.org/nexus/content/groups/public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="IntellectualSites" />
+      <option name="name" value="IntellectualSites" />
+      <option name="url" value="https://mvn.intellectualsites.com/content/groups/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="IntellectualSites" />
+      <option name="name" value="IntellectualSites" />
+      <option name="url" value="https://mvn.intellectualsites.com/content/repositories/releases/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />

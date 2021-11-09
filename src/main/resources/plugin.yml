@@ -7,3 +7,7 @@ commands:
     description: General store settings
   neighborhood:
     description: General neighborhood
+  plot:
+    description: Plot Commands
+  admin:
+    description: Admin commands

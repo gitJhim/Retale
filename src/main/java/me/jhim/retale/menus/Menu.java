@@ -24,7 +24,6 @@ public abstract class Menu implements InventoryHolder {
 
     public abstract void setMenuItems();
 
-
     public void open() {
         inventory = Bukkit.createInventory(this, getSlots(), ChatColor.translateAlternateColorCodes('&', getMenuName()));
 

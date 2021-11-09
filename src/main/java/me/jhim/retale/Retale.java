@@ -1,6 +1,8 @@
 package me.jhim.retale;
 
+import me.jhim.retale.commands.admin.AdminCommandManager;
 import me.jhim.retale.commands.neighborhood.NeighborhoodCommandManager;
+import me.jhim.retale.commands.plot.PlotCommandManager;
 import me.jhim.retale.commands.store.StoreCommandManager;
 import me.jhim.retale.events.NeighborhoodEvents;
 import me.jhim.retale.mysql.MySQL;
@@ -8,6 +10,8 @@ import me.jhim.retale.neighborhoods.NeighborhoodManager;
 import me.jhim.retale.stores.StoreManager;
 import me.jhim.retale.menus.MenuEvents;
 import me.jhim.retale.menus.PlayerMenuUtility;
+import me.jhim.retale.structure.StructureEvents;
+import me.jhim.retale.structure.StructureManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -27,6 +31,7 @@ public class Retale extends JavaPlugin {
 
     private StoreManager storeManager;
     private NeighborhoodManager neighborhoodManager;
+    private StructureManager structureManager;
     private MySQL mySQL;
 
     @Override
@@ -49,16 +54,20 @@ public class Retale extends JavaPlugin {
         mySQL = new MySQL(this);
         storeManager = new StoreManager(this);
         neighborhoodManager = new NeighborhoodManager(this);
+        structureManager = new StructureManager();
     }
 
     private void registerCommands() {
         getCommand("store").setExecutor(new StoreCommandManager(this));
         getCommand("neighborhood").setExecutor(new NeighborhoodCommandManager(this));
+        getCommand("plot").setExecutor(new PlotCommandManager(this));
+        getCommand("admin").setExecutor(new AdminCommandManager(this));
     }
 
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new MenuEvents(this), this);
         getServer().getPluginManager().registerEvents(new NeighborhoodEvents(this), this);
+        getServer().getPluginManager().registerEvents(new StructureEvents(this), this);
     }
 
     private void loadConfig() {
@@ -132,4 +141,5 @@ public class Retale extends JavaPlugin {
         return this.storeManager;
     }
     public NeighborhoodManager getNeighborhoodManager() { return this.neighborhoodManager; }
+    public StructureManager getStructureManager() { return this.structureManager; }
 }

@@ -13,10 +13,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SetPlotChunks extends SubCommand {
 
@@ -55,9 +52,10 @@ public class SetPlotChunks extends SubCommand {
             int plotNumber = Integer.parseInt(args[2]);
             Plot p = n.getPlots().get(plotNumber);
 
-            for(Chunk c : around(player.getLocation().getChunk(), 1)) {
-                p.addChunk(new int[]{c.getX(), c.getZ()});
+            for(int i = 0; i < around(player.getLocation().getChunk()).size(); i++) {
+                p.addChunk(new int[]{around(player.getLocation().getChunk()).get(i).getX(), around(player.getLocation().getChunk()).get(i).getZ()});
             }
+
             for(int i = 0; i < p.getChunks().size(); i++) {
                 int[] coords = p.getChunks().get(i);
                 FileConfiguration neighborhoodConfig = retale.getNeighborhoodManager().getConfig();
@@ -69,20 +67,25 @@ public class SetPlotChunks extends SubCommand {
         }
     }
 
-    private Collection<Chunk> around(Chunk origin, int radius) {
+    private List<Chunk> around(Chunk origin) {
         World world = origin.getWorld();
 
-        int length = (radius * 2) + 1;
-        Set<Chunk> chunks = new HashSet<>(length * length);
 
-        int cX = origin.getX();
-        int cZ = origin.getZ();
+        List<Chunk> chunks = new ArrayList<Chunk>();
 
-        for (int x = -radius; x <= radius; x++) {
-            for (int z = -radius; z <= radius; z++) {
-                chunks.add(world.getChunkAt(cX + x, cZ + z));
-            }
-        }
+        int oX = origin.getX();
+        int oZ = origin.getZ();
+
+        chunks.add(world.getChunkAt(oX - 1, oZ + 1)); // Top Left
+        chunks.add(world.getChunkAt(oX - 1, oZ));        // Top Middle
+        chunks.add(world.getChunkAt(oX - 1, oZ - 1)); // Top Right
+        chunks.add(world.getChunkAt(oX,oZ + 1));        // Middle Left
+        chunks.add(origin);                                // Middle
+        chunks.add(world.getChunkAt(oX,oZ - 1));        // Middle Right
+        chunks.add(world.getChunkAt(oX + 1, oZ + 1)); // Bottom Left
+        chunks.add(world.getChunkAt(oX + 1, oZ));        // Bottom Middle
+        chunks.add(world.getChunkAt(oX + 1, oZ - 1)); // Bottom Right
+
         return chunks;
     }
 

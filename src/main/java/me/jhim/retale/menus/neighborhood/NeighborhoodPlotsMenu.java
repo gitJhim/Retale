@@ -7,6 +7,7 @@ import me.jhim.retale.menus.PlayerMenuUtility;
 import me.jhim.retale.neighborhoods.Neighborhood;
 import me.jhim.retale.neighborhoods.Plot;
 import me.jhim.retale.stores.Store;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -41,7 +42,6 @@ public class NeighborhoodPlotsMenu extends Menu {
     public void handleMenu(InventoryClickEvent e) {
         switch (e.getCurrentItem().getType()) {
             case CLAY:
-                // getting the plot based on the slot that was clicked i hope
                 Player player = (Player) e.getWhoClicked();
                 Plot plot = neighborhood.getPlots().get(Ints.indexOf(plotSlots, e.getSlot()));
                 Store playerStore = retale.getStoreManager().getStores().get(player.getUniqueId());
@@ -50,8 +50,15 @@ public class NeighborhoodPlotsMenu extends Menu {
                 } else if(playerStore.isLoaded()) {
                     player.sendMessage(retale.formatInfo("&cYour store is already loaded! Unload your store by doing &a/store"));
                 } else {
-                    playerStore.setLoaded(true);
                     plot.setStore(playerStore);
+                    retale.getStoreManager().loadStorePlot(playerStore).thenAccept(consumer -> {
+                        Bukkit.getScheduler().runTask(retale, () -> {
+                            // Run Sync
+                            e.getWhoClicked().sendMessage(retale.formatInfo("&e&l" + playerStore.getName() + " &r&ahas been loaded!"));
+                            e.getWhoClicked().teleport(retale.getStoreManager().getStorePlot(playerStore).getLocation());
+                        });
+                    });
+                    playerStore.setLoaded(true);
                 }
                 player.closeInventory();
             default:
